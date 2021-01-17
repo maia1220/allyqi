@@ -1,5 +1,5 @@
 @import url('https://rsms.me/inter/inter-ui.css');
-/* body {
+body {
   align-items: center;
   background: linear-gradient(-45deg, #210242, #9198e5);
   display: flex;
@@ -8,10 +8,9 @@
   justify-content: center;
   margin: 0;
   width: 100vw;
-} */
+}
 .card {
-  align-items: center;
-  background: lightblue;
+  background: white;
   border-radius: 12px;
   box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
   height: 200px;
@@ -19,7 +18,6 @@
   padding: 20px;
   position: relative;
   width: 300px;
-  font-family: 'Inter UI', sans-serif;
 }
 .title {
   font-size: 1.5em;
