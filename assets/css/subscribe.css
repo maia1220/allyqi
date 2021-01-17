@@ -1,5 +1,5 @@
 @import url('https://rsms.me/inter/inter-ui.css');
-body {
+.body2 {
   align-items: center;
   background: linear-gradient(-45deg, #210242, #9198e5);
   display: flex;
@@ -19,34 +19,34 @@ body {
   position: relative;
   width: 300px;
 }
-.title {
+.title2 {
   font-size: 1.5em;
   height: 29px;
   margin-bottom: 0;
 }
-.text {
+.text2 {
   color: #667;
   font-size: 1em;
   height: 38px;
   margin: 5px 0 0;
 }
-.line {
+.line1 {
   left: 0;
   position: absolute;
-  width: 250px;
+  width: 340px;
 }
-.line path {
+.line1 path {
   fill: none;
   stroke: black;
   stroke-width: 2;
   stroke-dasharray: 300 1903;
 }
-.card.saving .line path {
+.card.saving .line1 path {
   stroke-dashoffset: -472;
   stroke-dasharray: 153 1903;
   transition: stroke-dasharray 500ms, stroke-dashoffset 500ms;
 }
-.card.done .line path {
+.card.done .line1 path {
   stroke-dashoffset: -762;
   stroke-dasharray: 1095 1903;
   transition: stroke-dasharray 1500ms, stroke-dashoffset 1500ms;
@@ -68,20 +68,20 @@ body {
 .card.done .line2 {
   animation: 500ms ScaleDown forwards;
 }
-.form {
+.form2 {
   transform-origin: 0 50%;
   transition: transform 500ms, opacity 500ms;
 }
-.card.saving .form {
+.card.saving .form2 {
   transform: translateY(-16px) scale(.8);
 }
-.card.done .form {
+.card.done .form2 {
   transform: translateY(-16px) scale(.8);
   opacity: 0;
 }
-.input {
+.input2 {
   background: transparent;
-  border: 0;
+  border: 0.2;
   box-sizing: border-box;
   font-size: 20px;
   height: 40px;
