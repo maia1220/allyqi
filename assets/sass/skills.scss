@@ -1,6 +1,6 @@
 @import url("https://fonts.googleapis.com/css?family=Montserrat");
 
-/* $darkest-blue: #1a237e;
+$darkest-blue: #1a237e;
 $darker-blue: #283593;
 $dark-blue: #303f9f;
 $medium-blue: #3949ab;
@@ -12,12 +12,8 @@ $black: #0e1442;
 $orange: #ffb300;
 $yellow: #fdd835;
 $dark-pink: #ad1457;
-$light-pink: #d81b60; */
+$light-pink: #d81b60;
 
-/* @charset "UTF-8";
-* {
-  outline: none;
-}
 
 *,
 *:before,
@@ -54,8 +50,6 @@ ul {
   padding: 0;
 }
 
-h2 {
-}
 
 h3 {
   color: $orange;
@@ -327,12 +321,10 @@ h3 {
   width: 48%;
   background: $darker-blue;
   padding: 15px;
-} */
-
-
+}
 .resume .func .skills-prog {
   clear: both;
-  background: lightblue;
+  background: $darker-blue;
   padding: 15px;
 }
 .resume .func .skills-prog ul {
@@ -345,18 +337,18 @@ h3 {
   transition-duration: 0.3s;
 }
 .resume .func .skills-prog ul li:hover {
-  color: pink;
+  color: $yellow;
 }
 .resume .func .skills-prog ul li:hover .skills-bar .bar {
-  background: pink;
-  box-shadow: 0 0 0 1px pink;
+  background: $yellow;
+  box-shadow: 0 0 0 1px $yellow;
 }
 .resume .func .skills-prog ul li span {
   display: block;
   width: 120px;
 }
 .resume .func .skills-prog ul li .skills-bar {
-  background: lightblue;
+  background: $white;
   height: 2px;
   width: calc(100% - 120px);
   position: relative;
@@ -366,11 +358,11 @@ h3 {
   position: absolute;
   top: -1px;
   height: 4px;
-  background: orange;
-  box-shadow: 0 0 0 orange;
+  background: $orange;
+  box-shadow: 0 0 0 $orange;
   border-radius: 5px;
 }
-/* .resume .func .skills-soft {
+.resume .func .skills-soft {
   clear: both;
   background: $darker-blue;
   padding: 15px;
@@ -456,4 +448,4 @@ h3 {
 }
 .resume .func .interests-items div span {
   display: block;
-} */
+}
