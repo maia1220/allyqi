@@ -39,8 +39,7 @@
       }
     </style>
     
-    <!-- Custom styles for this template -->
-    <link href="starter-template.css" rel="stylesheet">
+
 	</head>
 
 	<body data-new-gr-c-s-check-loaded="14.993.0" data-gr-ext-installed="">
@@ -65,7 +64,7 @@
 
 							<ul class="navbar-nav me-auto mb-2 mb-md-0">
 							<li class="nav-item">
-								<a class="nav-link active" aria-current="page" href="index.html">Home</a>
+								<a class="nav-link" href="index.html">Home</a>
 							</li>
 							<li class="nav-item">
 								<a class="nav-link" href="aq_curriculum.html">CV</a>
@@ -80,10 +79,10 @@
 								<a class="nav-link" href="aq_resources.html">Resources</a>
 							</li>
 							<li class="nav-item dropdown">
-								<a class="nav-link dropdown-toggle" href="" id="dropdown01" data-bs-toggle="dropdown" aria-expanded="false">Tutorials 
+								<a class="nav-link dropdown-toggle active" href="" id="dropdown01" data-bs-toggle="dropdown" aria-expanded="false" aria-current="page">Tutorials 
 									<span class="badge bg-success">6</span></a>
 								<ul class="dropdown-menu" aria-labelledby="dropdown01">
-								<li><a class="dropdown-item" href="aq_vba.html">Excel VBA <span class="badge bg-warning">3</span></a></li>
+								<li><a class="dropdown-item active" href="aq_vba.html">Excel VBA<span class="badge bg-warning">3</span></a></li>
 								<li><a class="dropdown-item" href="#">Power BI <span class="badge bg-info">2</span></a></li>
 								<li><a class="dropdown-item" href="#">Tableau</a></li>
 								<li><a class="dropdown-item" href="#">Python</a></li>
@@ -102,39 +101,104 @@
 			</div>	
 	  
 	  <!-- Main Content -->
-	  <main class="container">
-	  
-		<div class="starter-template text-center py-5 px-3">
-		  <h1>Welcome to my website!</h1>
-		  <p class="lead">Please feel free to email me for questions or collaborations.</p>
-		</div>
+		<main class="container">
+		
+			<div class="starter-template text-center py-5 px-3">
+			<h1>Welcome to my website!</h1>
+			<p class="lead">All my tutorials are here to teach you how to use
+				a few lines of codes to automate repetitive tasks which will save us tremendous amount of time.</p>
+			</div>
 
-
-		<div class="column">
-			<section style="width: 100%;">
-				<div class="inner">
-					<h3>Clinical Research Data 101</h3>
-					<h6>Automating Small & Repetitive Tasks</h6>
-					<h6>Languages/Tools: Excel VBA </h6>
-					<p>
-					This tutorial is to enlighten those of you who are tired of changing the same values for 1000 times in Excel. </b>
+			<article class="blog-post">
+				<h2 class="blog-post-title">#2: Setting up the header variables</h2>
+				<p class="blog-post-meta">Feb 4, 2021</p>
+				<p><i>Clinical Research Data 101</i></p>
+				<p>Tools/Languages: Excel VBA Macro</p>
+		
+				<p>This tutorial shows you how to set up the header variables for every spreadsheet.</p>
+				<hr>
+				<p>If  you need to create the same spreadsheet with the same header row.<br></p>
+				<p>
 					First of all, here's the link to learn how to turn on the 
-					<a href="https://www.excel-easy.com/examples/developer-tab.html" target="_blank">"Developer Mode"</a>in your Excel. Excel is easy until now!</b>
-					</p>
+					<a href="https://www.excel-easy.com/examples/developer-tab.html" target="_blank">"Developer Mode"</a> in your Excel. 
+					</b></p>
+					<iframe width="560" height="315" src="https://www.youtube.com/embed/qFtwtFXyFGM" frameborder="0" 
+					allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+				</p>
+				
+				<p>In clinical research, we often need to create a simple report with the same header variables.</p>
+				<h2>What happened?</h2>
+				<p>With these few simple lines of codes, you will be able to enter the same header variables with a single click.
+					You can change the header variables to your own needs.  
+				</p>
+				<h3>What should I do now?</h3>
+				<ul>
+					<li>Open the Excel spreadsheet and turn on the "Developer" mode as described at the beginning.</li>
+					<li>Click "Visual Basic" on the top ribbon (first one on the left).</li>
+					<li>Insert a new "Module" and copy/paste the codes below. You can add more header variables by changing the <code>Range("A1").Select</code> to the new cell locations.
+						<pre><code>
+Sub header()
 
-			</section>
-		</div>
+
+Range("A1").Select
+
+ActiveCell.FormulaR1C1 = "study_id"
+
+Range("B1").Select
+
+ActiveCell.FormulaR1C1 = "first_name"
+
+Range("C1").Select
+
+ActiveCell.FormulaR1C1 = "last_name"
+
+Range("D1").Select
+
+ActiveCell.FormulaR1C1 = "site_id"
+
+Range("E1").Select
+
+ActiveCell.FormulaR1C1 = "email"
+
+Range("F1").Select
+
+ActiveCell.FormulaR1C1 = "phone"
+
+End Sub
+						</code></pre></li>
+					<li>Go back to the spreadsheet and click the "Macros" icon on the top ribbon. Then assign the macro to "header" and click "OK".</li>
+				</ul>
+				
+				<p>Please leave me a message if it doesn't work for you.</p>
+				
+				<!-- <h3>Sub-heading</h3>
+				<p>Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aenean lacinia bibendum nulla sed consectetur. Etiam porta sem malesuada magna mollis euismod. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
+				<ul>
+				<li>Praesent commodo cursus magna, vel scelerisque nisl consectetur et.</li>
+				<li>Donec id elit non mi porta gravida at eget metus.</li>
+				<li>Nulla vitae elit libero, a pharetra augue.</li>
+				</ul>
+				<p>Donec ullamcorper nulla non metus auctor fringilla. Nulla vitae elit libero, a pharetra augue.</p>
+				<ol>
+				<li>Vestibulum id ligula porta felis euismod semper.</li>
+				<li>Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</li>
+				<li>Maecenas sed diam eget risus varius blandit sit amet non magna.</li>
+				</ol>
+				<p>Cras mattis consectetur purus sit amet fermentum. Sed posuere consectetur est at lobortis.</p> -->
+			</article>
 
 
-    <!-- Footer -->
-    <!-- Copyright  -->
-	<footer class="footer mt-auto py-3 bg-light">
-		<div class="container">
-		  <span class="text-muted">Template from <a href="https://github.com/maia1220/allyqi" target="_blank">Ally Qi (2021).</a> All rights reserved.<br>
-			Design: <a href="https://getbootstrap.com/">HTML5 & Bootstrap</a>
-		</span>
-		</div>
-	</footer>
+
+
+			<!-- Footer -->
+			<!-- Copyright  -->
+			<footer class="footer mt-auto py-3 bg-light">
+				<div class="container">
+				<span class="text-muted">Template from <a href="https://github.com/maia1220/allyqi" target="_blank">Ally Qi (2021).</a> All rights reserved.<br>
+					Design: <a href="https://getbootstrap.com/">HTML5 & Bootstrap</a>
+				</span>
+				</div>
+			</footer>
 
 
 </main>
