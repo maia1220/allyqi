@@ -110,63 +110,154 @@
 			</div>
 
 			<article class="blog-post">
-				<h2 class="blog-post-title">#2: Setting up the header variables</h2>
-				<p class="blog-post-meta">Feb 4, 2021</p>
+				<h2 class="blog-post-title">#3: Assigning site names based on assigned site numbers</h2>
+				<p class="blog-post-meta">Feb 8, 2021</p>
 				<p><i>Clinical Research Data 101</i></p>
 				<p>Tools/Languages: Excel VBA Macro</p>
 		
-				<p>This tutorial shows you how to set up the same header variables for every spreadsheet.</p>
+				<p>This tutorial shows you how to automatically delete the unused column, loop through all rows to assign site names based
+					on assigned site numbers.</p>
 				<hr>
-				<p>If  you need to create the same spreadsheet with the same header row.<br></p>
+				<p>It's super helpful if you have more than 100 participants from more than 1 site.<br>
+					Or when you need to generate daily participant reporting.<br>
+					You can use this template to assign column values based on column values (numbers) from another column.
+				</p>
 				<p>
 					First of all, here's the link to learn how to turn on the 
 					<a href="https://www.excel-easy.com/examples/developer-tab.html" target="_blank">"Developer Mode"</a> in your Excel. 
 					</b></p>
-					<iframe width="560" height="315" src="https://www.youtube.com/embed/qFtwtFXyFGM" frameborder="0" 
+					<iframe width="560" height="315" src="https://www.youtube.com/embed/kFFCbbu-f5o" frameborder="0" 
 					allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 				</p>
-				
-				<p>In clinical research, we often need to create a simple report with the same header variables.</p>
+
 				<h2>What happened?</h2>
-				<p>With these few simple lines of codes, you will be able to enter the same header variables with a single click.
-					You can change the header variables to your own needs.  
+				<p>In clinical research, we often need to track participants' status. Usually we would have a spreadsheet of participants IDs with previously
+					assigned site numbers. For example, UCLA is site 01 and UC Santa Cruz is site 02, etc. In the electronic data capture system (REDCap), 
+					the site numbers should be used as the best indicator for sites, since it's easy to mispell the site names and there're multiple ways 
+					to write the same site names. This tutorial is to simulate the situation when you export the report data to Excel spreadsheet as raw data.
+				</p>
 				</p>
 				<h3>What should I do now?</h3>
 				<ul>
 					<li>Open the Excel spreadsheet and turn on the "Developer" mode as described at the beginning.</li>
 					<li>Click "Visual Basic" on the top ribbon (first one on the left).</li>
-					<li>Insert a new "Module" and copy/paste the codes below. You can add more header variables by changing the <code>Range("A1").Select</code> to the new cell locations.
+					<li>Insert a new "Module" and copy/paste the codes below. 
 						<pre><code>
-Sub header()
+Sub dag()
 
+'Run the missing site(DAG) report first
 
-Range("A1").Select
+Dim site As Double
 
-ActiveCell.FormulaR1C1 = "study_id"
+Dim group_name As String
 
-Range("B1").Select
+Dim wb As Workbook
 
-ActiveCell.FormulaR1C1 = "first_name"
+Dim today As String
 
-Range("C1").Select
+Dim counter As Integer
 
-ActiveCell.FormulaR1C1 = "last_name"
+'Display today's date first in a message box
 
-Range("D1").Select
+today = DateValue(Now)
 
-ActiveCell.FormulaR1C1 = "site_id"
+todaydate = Replace(today, "/", "_")
 
-Range("E1").Select
+MsgBox todaydate
 
-ActiveCell.FormulaR1C1 = "email"
+'Select the correct sheets and copy to a new tab
 
-Range("F1").Select
+Sheets("Sheet1").Select
 
-ActiveCell.FormulaR1C1 = "phone"
+Sheets("Sheet1").Copy After:=Sheets(1)
+
+'Assign the last row variable for later loops
+
+lastrow = Cells(Rows.Count, 1).End(xlUp).Row
+
+'Delete unused columns'
+
+Columns("C:D").Select
+
+Selection.Delete Shift:=xlToLeft
+
+'Autofit the columns
+
+Columns("A:G").EntireColumn.AutoFit
+
+'Delete records that have been assigned DAG
+
+Range("C2:C" & lastrow).SpecialCells(xlCellTypeConstants).EntireRow.Delete
+
+'Delete records that have missing site number (empty cells)
+
+Range("D2:D" & lastrow).SpecialCells(xlCellTypeBlanks).EntireRow.Delete
+
+'Loop through rows to assign DAG based on site number
+
+For myrow = 2 To lastrow
+
+intloc = Range("D" & myrow).Value
+
+If intloc = 2 Then
+
+	Range("C" & myrow).Value = "UC Santa Cruz"
+
+ElseIf intloc = 1 Then
+
+	Range("C" & myrow).Value = "Stanford"
+
+ElseIf intloc = 3 Then
+
+	Range("C" & myrow).Value = "UC Berkeley"
+
+ElseIf intloc = 4 Then
+
+	Range("C" & myrow).Value = "UCLA"
+
+ElseIf intloc = 5 Then
+
+	Range("C" & myrow).Value = "UC Irvine"
+
+ElseIf intloc = 6 Then
+
+	Range("C" & myrow).Value = "UC Merced"
+
+ElseIf intloc = 7 Then
+
+	Range("C" & myrow).Value = "UC Riverside"
+
+ElseIf intloc = 8 Then
+
+	Range("C" & myrow).Value = "UC Davis"
+
+ElseIf intloc = 9 Then
+
+	Range("C" & myrow).Value = "UC San Diego"
+
+ElseIf intloc = 10 Then
+
+	Range("C" & myrow).Value = "UC San Francisco"
+
+Else		
+	
+	End If
+
+Next myrow
+
+'Change the sheet name to today's date
+
+Sheets("Sheet1 (2)").Name = "dag_" & todaydate
+
+'Save the sheet with today's date as the file name (for macbook)
+
+ActiveSheet.SaveAs "/Users/aq/Desktop/StudyName_DAG_" & todaydate & "_.csv"
+
 
 End Sub
+							
 						</code></pre></li>
-					<li>Go back to the spreadsheet and click the "Macros" icon on the top ribbon. Then assign the macro to "header" and click "OK".</li>
+					<li>Go back to the spreadsheet and click the "Macros" icon on the top ribbon. Then assign the macro to "dag" and click "OK".</li>
 				</ul>
 				
 				<p>Please leave me a message if it doesn't work for you.</p>
