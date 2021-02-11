@@ -110,23 +110,23 @@
 			</div>
 
 			<article class="blog-post">
-				<h2 class="blog-post-title">#3: Assigning site names based on assigned site numbers</h2>
-				<p class="blog-post-meta">Feb 8, 2021</p>
+				<h2 class="blog-post-title">#4: How to loop through all rows and copy filtered data to a new sheet?</h2>
+				<p class="blog-post-meta">Feb 10, 2021</p>
 				<p><i>Clinical Research Data 101</i></p>
 				<p>Tools/Languages: Excel VBA Macro</p>
 		
-				<p>This tutorial shows you how to automatically delete the unused column, loop through all rows to assign site names based
-					on assigned site numbers.</p>
+				<p>This tutorial shows you how to automatically loop through all rows, find the IDs with missing data access group (DAG) names, 
+					copy/paste the filtered data to a new sheet and save the new sheet in one click.
+				</p>
 				<hr>
 				<p>It's super helpful if you have more than 100 participants from more than 1 site.<br>
-					Or when you need to generate daily participant reporting.<br>
-					You can use this template to assign column values based on column values (numbers) from another column.
+					Or when you need to generate a list of participants with missing site names or numbers.<br>
 				</p>
 				<p>
 					First of all, here's the link to learn how to turn on the 
 					<a href="https://www.excel-easy.com/examples/developer-tab.html" target="_blank">"Developer Mode"</a> in your Excel. 
 					</b></p>
-					<iframe width="560" height="315" src="https://www.youtube.com/embed/kFFCbbu-f5o" frameborder="0" 
+					<iframe width="560" height="315" src="https://www.youtube.com/embed/ZwFw8IU3mZI" frameborder="0" 
 					allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 				</p>
 
@@ -136,6 +136,10 @@
 					the site numbers should be used as the best indicator for sites, since it's easy to mispell the site names and there're multiple ways 
 					to write the same site names. This tutorial is to simulate the situation when you export the report data to Excel spreadsheet as raw data.
 				</p>
+				<p>
+				   In the online EDC, hundreds of records are entered by site coordinators from different institutions, you'd like to quickly generate a list of 
+				   participants who have not been assigned to a site (a typical error on the site), knowing that the missing data is coded as either 99 or 0.<br>
+				   Your goal is to first find all IDs with missing DAG and then copy the whole row to a new sheet. In this case, you can create a loop to accomplish that.
 				</p>
 				<h3>What should I do now?</h3>
 				<ul>
@@ -143,13 +147,11 @@
 					<li>Click "Visual Basic" on the top ribbon (first one on the left).</li>
 					<li>Insert a new "Module" and copy/paste the codes below. 
 						<pre><code>
-Sub dag()
-
-'Run the missing site(DAG) report first
+Sub FindMissingDAG()
 
 Dim site As Double
 
-Dim group_name As String
+Dim dag As String
 
 Dim wb As Workbook
 
@@ -157,7 +159,11 @@ Dim today As String
 
 Dim counter As Integer
 
-'Display today's date first in a message box
+Dim intloc As Integer
+
+lastrow = Sheets("Sheet1").Cells(Rows.Count, 1).End(xlUp).Row
+
+counter = 2
 
 today = DateValue(Now)
 
@@ -165,94 +171,37 @@ todaydate = Replace(today, "/", "_")
 
 MsgBox todaydate
 
-'Select the correct sheets and copy to a new tab
+'Adding a new sheet named "Missing_DAG"
 
-Sheets("Sheet1").Select
+Sheets.Add(After:=Sheets("Sheet1")).Name = "Missing_DAG"
+		
+'Copying the heading variables to the new sheet
 
-Sheets("Sheet1").Copy After:=Sheets(1)
+Worksheets("Missing_DAG").Range("A1:D1").Value = Sheets("Sheet1").Range("A1:D1").Value
 
-'Assign the last row variable for later loops
-
-lastrow = Cells(Rows.Count, 1).End(xlUp).Row
-
-'Delete unused columns'
-
-Columns("C:D").Select
-
-Selection.Delete Shift:=xlToLeft
-
-'Autofit the columns
-
-Columns("A:G").EntireColumn.AutoFit
-
-'Delete records that have been assigned DAG
-
-Range("C2:C" & lastrow).SpecialCells(xlCellTypeConstants).EntireRow.Delete
-
-'Delete records that have missing site number (empty cells)
-
-Range("D2:D" & lastrow).SpecialCells(xlCellTypeBlanks).EntireRow.Delete
-
-'Loop through rows to assign DAG based on site number
+'Looping through all rows to find all IDs with missing DAGs (site number: 99 or 0)
 
 For myrow = 2 To lastrow
 
-intloc = Range("D" & myrow).Value
+intloc = Sheets("Sheet1").Range("D" & myrow).Value
 
-If intloc = 2 Then
+If intloc = 99 Or intloc = 0 Then
 
-	Range("C" & myrow).Value = "UC Santa Cruz"
 
-ElseIf intloc = 1 Then
+Worksheets("Missing_DAG").Range("A" & counter & ":D" & counter).Value = Worksheets("Sheet1").Range("A" & myrow & ":D" & myrow).Value
 
-	Range("C" & myrow).Value = "Stanford"
 
-ElseIf intloc = 3 Then
+counter = counter + 1
+		
+Else
 
-	Range("C" & myrow).Value = "UC Berkeley"
-
-ElseIf intloc = 4 Then
-
-	Range("C" & myrow).Value = "UCLA"
-
-ElseIf intloc = 5 Then
-
-	Range("C" & myrow).Value = "UC Irvine"
-
-ElseIf intloc = 6 Then
-
-	Range("C" & myrow).Value = "UC Merced"
-
-ElseIf intloc = 7 Then
-
-	Range("C" & myrow).Value = "UC Riverside"
-
-ElseIf intloc = 8 Then
-
-	Range("C" & myrow).Value = "UC Davis"
-
-ElseIf intloc = 9 Then
-
-	Range("C" & myrow).Value = "UC San Diego"
-
-ElseIf intloc = 10 Then
-
-	Range("C" & myrow).Value = "UC San Francisco"
-
-Else		
-	
-	End If
+End If
 
 Next myrow
 
-'Change the sheet name to today's date
+'save the file in mac
 
-Sheets("Sheet1 (2)").Name = "dag_" & todaydate
-
-'Save the sheet with today's date as the file name (for macbook)
-
-ActiveSheet.SaveAs "/Users/aq/Desktop/StudyName_DAG_" & todaydate & "_.csv"
-
+Worksheets("Missing_DAG").SaveAs "/Users/aq/Desktop/Tutorials/StudyName_Missing_DAG_" & todaydate & ".csv"
 
 End Sub
 							
